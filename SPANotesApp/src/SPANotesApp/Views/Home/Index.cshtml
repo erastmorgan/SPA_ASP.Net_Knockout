@@ -1,0 +1,62 @@
+﻿<div data-bind="if: koModel.errorMessage != ''">
+    <label style="color: red;" data-bind="text: koModel.errorMessage"></label>
+</div>
+<div data-bind="if: koModel.showItemsList">
+    <div class="section panel panel-primary">
+        <div class="panel-heading">Notes List</div>
+        <div class="panel-body">
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr><th>Name</th><th>Created Date/Time</th></tr>
+                </thead>
+                <tbody data-bind="foreach: koModel.notes">
+                    <tr>
+                        <td><a style="cursor: pointer;" data-bind="text: name, click: openItem"></a></td>
+                        <td data-bind="text: formatDate(new Date(createdDateTime))"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div data-bind="if: koModel.showAddNew">
+    <div class="section panel panel-primary">
+        <div class="panel-heading">
+            New Note
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="txtNoteName" data-bind="value: koModel.newItem.name" autofocus required />
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="txtNoteDescription" data-bind="value: koModel.newItem.description" required></textarea>
+                </div>
+                <div class="form-group dropdown">
+                    <label>Expiry date</label><br />
+                    <button id="btnShowExpiryDate" class="btn btn-primary dropdown-toggle" type="button" data-bind="value: koModel.newItem.expTimeType.key, html: koModel.newItem.expTimeType.value" data-toggle="dropdown" style="width: 200px;"></button>
+                    <ul id="ddlExpiryDates" class="dropdown-menu" style="overflow: auto; width: 200px;" data-bind="foreach: koModel.expTimeTypes">
+                        <li style="cursor: pointer;" data-bind="value: key, click: selectExpTime"><a data-bind="text: value"></a></li>
+                    </ul>
+                </div>
+                <button type="submit" data-bind="click: addItem" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div data-bind="if: koModel.showSelectedItem">
+    <div class="section panel panel-primary">
+        <div class="panel-heading" data-bind="text: koModel.selectedItem.name">
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label></label><br />
+                <textarea data-bind="text: koModel.selectedItem.description" readonly></textarea><br />
+                <label>Created Date/Time:</label>&nbsp;<label data-bind="text: koModel.selectedItem.createdDateTime"></label><br />
+                <label>Expiration Date/Time:</label>&nbsp;<label data-bind="text: koModel.selectedItem.expirationDateTime"></label>
+            </div>
+        </div>
+    </div>
+</div>
